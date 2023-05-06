@@ -39,9 +39,10 @@ public class SprintService {
         List<SprintFieldEntry> sprintFieldEntries = requestDto.toSprintFieldEntryList(new_sprint);
         sprintFieldEntryRepository.saveAll(sprintFieldEntries);
 
-        /////////getOneSprint로 반환 혹은 여기서 생성해서 반환하기
+        List<FieldObject> fieldObjectList = makeFieldObjectList(sprintFieldEntries);
+        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(new_sprint, fieldObjectList, user);
 
-        return null;
+        return new SuccessResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @Transactional
@@ -91,9 +92,4 @@ public class SprintService {
                 .map(FieldObject::new)
                 .collect(Collectors.toList());
     }
-
-    private boolean checkIsSprintOwner(Sprint sprint, User user){
-        return sprint.getUser().getId().equals(user.getId());
-    }
-
 }
