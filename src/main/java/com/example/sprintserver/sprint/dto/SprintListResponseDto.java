@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class SprintListResponseDto {
@@ -14,9 +15,12 @@ public class SprintListResponseDto {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
     private final String sprintType;
-    private final FieldObjectList fieldObjectList;
+    private final List<FieldObject> fieldObjectList;
     @Builder
-    public SprintListResponseDto(Long sprintId, String title, String nickname, Integer numLikes, LocalDateTime createdAt, LocalDateTime modifiedAt, String sprintType, FieldObjectList fieldObject) {
+    public SprintListResponseDto(
+            Long sprintId, String title, String nickname, Integer numLikes,
+            LocalDateTime createdAt, LocalDateTime modifiedAt, String sprintType, List<FieldObject> fieldObjects
+    ) {
         this.sprintId = sprintId;
         this.title = title;
         this.nickname = nickname;
@@ -24,6 +28,6 @@ public class SprintListResponseDto {
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.sprintType = sprintType;
-        this.fieldObjectList = fieldObject;
+        this.fieldObjectList = fieldObjects;
     }
 }

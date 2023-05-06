@@ -1,31 +1,32 @@
 package com.example.sprintserver.sprint.entity;
 
 
+import com.example.sprintserver.common.Timestamped;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.swing.*;
 
 @Entity
 @NoArgsConstructor
 @Getter
-public class SprintFieldEntry {
+public class SprintFieldEntry extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long sprintId;
+
+    @ManyToOne
+    private Sprint sprint;
     private Integer fieldIdx;
     private String fieldName;
     private Integer fieldMax;
-    private Integer fieldMemberCount;
+    private Integer fieldMemberCount = 0;
 
     @Builder
-    public SprintFieldEntry(Long sprintId, Integer fieldIdx, String fieldName, Integer fieldMax, Integer fieldMemberCount) {
-        this.sprintId = sprintId;
+    public SprintFieldEntry(Sprint sprint, Integer fieldIdx, String fieldName, Integer fieldMax, Integer fieldMemberCount) {
+        this.sprint = sprint;
         this.fieldIdx = fieldIdx;
         this.fieldName = fieldName;
         this.fieldMax = fieldMax;

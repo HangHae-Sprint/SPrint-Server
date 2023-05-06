@@ -1,5 +1,6 @@
 package com.example.sprintserver.sprint.entity;
 
+import com.example.sprintserver.common.Timestamped;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor
-public class SprintJoinEntry {
+public class SprintJoinEntry extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
