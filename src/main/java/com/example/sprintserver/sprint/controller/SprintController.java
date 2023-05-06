@@ -1,11 +1,11 @@
 package com.example.sprintserver.sprint.controller;
 
 import com.example.sprintserver.common.Message;
-import com.example.sprintserver.dependencies.UserDetailsImpl;
 import com.example.sprintserver.sprint.dto.*;
-import com.example.sprintserver.dependencies.User;
 import com.example.sprintserver.sprint.service.SprintService;
 import com.example.sprintserver.sprint.sprint_utils.SuccessResponseEntity;
+import com.example.sprintserver.user.entity.User;
+import com.example.sprintserver.user.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/sprint")
 public class SprintController {
     private final SprintService sprintService;
-    private final User temp_user = User.builder().id(5L).email("123@com").nickname("testnickname").password("123").build();
     @GetMapping  // 모든 sprint 조회
-    public SuccessResponseEntity<SprintListResponseDto> getAllSprintList(){
-        //        user user = userDetails.getuser();
-        User user = temp_user; //나중에 AuthenticationPrincipal로 UserdetailsImpl 받아오기
+    public SuccessResponseEntity<SprintListResponseDto> getAllSprintList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        User user = userDetails.getUser();
         return sprintService.getAllSprintList();
     }
 
@@ -28,8 +28,7 @@ public class SprintController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody PostSprintRequestDto requestDto
     ){
-        //        user user = userDetails.getuser();
-        User user = temp_user; //나중에 AuthenticationPrincipal로 UserdetailsImpl 받아오기
+        User user = userDetails.getUser();
         return sprintService.postSprint(user, requestDto);
     }
 
@@ -38,8 +37,7 @@ public class SprintController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long sprintId
     ){
-//        user user = userDetails.getuser();
-        User user = temp_user; //나중에 AuthenticationPrincipal로 UserdetailsImpl 받아오기
+        User user = userDetails.getUser();
         return sprintService.getOneSprint(user, sprintId);
     }
 
@@ -49,8 +47,7 @@ public class SprintController {
             @PathVariable Long sprintId,
             @RequestBody UpdateSprintRequestDto requestDto
     ){
-        //        user user = userDetails.getuser();
-        User user = temp_user; //나중에 AuthenticationPrincipal로 UserdetailsImpl 받아오기
+        User user = userDetails.getUser();
         return sprintService.updateSprint(user, sprintId, requestDto);
     }
 
@@ -59,8 +56,7 @@ public class SprintController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long sprintId
     ){
-        //        user user = userDetails.getuser();
-        User user = temp_user; //나중에 AuthenticationPrincipal로 UserdetailsImpl 받아오기
+        User user = userDetails.getUser();
         return sprintService.deleteSprint(user, sprintId);
     }
 
@@ -70,8 +66,7 @@ public class SprintController {
             @PathVariable Long sprintId,
             @RequestBody joinSprintRequestDto requestDto
             ){
-        //        user user = userDetails.getuser();
-        User user = temp_user; //나중에 AuthenticationPrincipal로 UserdetailsImpl 받아오기
+        User user = userDetails.getUser();
         return sprintService.joinSprint(user, sprintId);
     }
 
