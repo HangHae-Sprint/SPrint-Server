@@ -8,11 +8,15 @@ import java.util.Map;
 
 @Getter
 public class FieldObject {
-    private final Map.Entry<String, Map.Entry<Integer, Integer>> fieldMaxAndNow;
+    private final String fieldName;
+    private final Integer nowMemberCount;
+    private final Integer fieldMaxNum;
 
     @Builder
     public FieldObject(String fieldName, Integer fieldMax, Integer fieldNow) {
-        this.fieldMaxAndNow = Map.entry(fieldName, Map.entry(fieldNow, fieldMax));
+        this.fieldName = fieldName;
+        this.nowMemberCount = fieldNow;
+        this.fieldMaxNum = fieldMax;
     }
 
     public FieldObject(SprintFieldEntry entry){
