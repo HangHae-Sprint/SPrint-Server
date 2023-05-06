@@ -1,6 +1,7 @@
 package com.example.sprintserver.comment.entity;
 
 import com.example.sprintserver.comment.dto.CommentRequestDto;
+import com.example.sprintserver.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
