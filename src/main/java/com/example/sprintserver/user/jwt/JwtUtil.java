@@ -1,6 +1,5 @@
 package com.example.sprintserver.user.jwt;
 
-import com.example.sprintserver.user.entity.UserRoleEnum;
 import com.example.sprintserver.user.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
