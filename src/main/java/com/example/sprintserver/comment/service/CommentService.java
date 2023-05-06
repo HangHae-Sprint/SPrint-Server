@@ -6,6 +6,7 @@ import com.example.sprintserver.comment.dto.StatusEnum;
 import com.example.sprintserver.comment.entity.Comment;
 import com.example.sprintserver.comment.repository.CommentRepository;
 import com.example.sprintserver.common.Message;
+import com.example.sprintserver.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +21,9 @@ public class CommentService {
     @Transactional
     public Message addComment(Long id, CommentRequestDto commentRequestDto, User user) {
         // 게시글의 DB 저장 유무 확인
-        Sprint sprint = boardRepository.findById(id).orElseThrow(
+        Sprint sprint = SprintRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
-        );
+
 
         // 요청 받은 DTO로 DB에 저장할 객체 만들기
         Comment comment = commentRepository.save(new Comment(commentRequestDto, sprint, user));
