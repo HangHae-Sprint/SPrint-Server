@@ -21,9 +21,15 @@ public class UserController {
 
     private final UserService userService;
 
+//    @ResponseBody
+//    @PostMapping("/register")
+//    public Message signup(@Valid SignupRequestDto signupRequestDto) {
+//        return userService.signup(signupRequestDto);
+//    }
+
     @ResponseBody
     @PostMapping("/register")
-    public Message signup(@Valid SignupRequestDto signupRequestDto) {
+    public Message signup(@RequestBody SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
 

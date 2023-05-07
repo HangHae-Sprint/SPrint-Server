@@ -25,15 +25,15 @@ public class UserService {
 
     @Transactional
     public Message signup(SignupRequestDto signupRequestDto) {
+        System.out.println("signupRequestDto.getUsername() = " + signupRequestDto.getUsername());
+        System.out.println("rawpassword = " + signupRequestDto.getPassword());
+        System.out.println("signupRequestDto.getNickname() = " + signupRequestDto.getNickname());
+        System.out.println("signupRequestDto.getEmail() = " + signupRequestDto.getEmail());
+
         String username = signupRequestDto.getUsername();
         String nickname = signupRequestDto.getNickname();
         String password = passwordEncoder.encode(signupRequestDto.getPassword());
         String email = signupRequestDto.getEmail();
-
-        System.out.println("username = " + username);
-        System.out.println("password = " + password);
-        System.out.println("nickname = " + nickname);
-        System.out.println("email = " + email);
 
         // 회원 중복 확인
         Optional<User> found = userRepository.findByUsername(username);
