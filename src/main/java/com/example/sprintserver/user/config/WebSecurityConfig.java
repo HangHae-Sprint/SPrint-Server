@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.nio.file.Path;
+
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity // Spring Security activate
@@ -32,7 +34,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers(PathRequest.toH2Console()) // mySQL 변경시 수정 필요함
+//                .requestMatchers(PathRequest.toH2Console()) // H2사용시에만
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
