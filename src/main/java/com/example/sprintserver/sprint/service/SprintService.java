@@ -58,22 +58,24 @@ public class SprintService {
         sprintRepository.save(new_sprint);
         List<SprintFieldEntry> sprintFieldEntries = requestDto.toSprintFieldEntryList(new_sprint);
         sprintFieldEntryRepository.saveAll(sprintFieldEntries);
+//
+//        List<FieldObject> fieldObjectList = makeFieldObjectList(sprintFieldEntries);
+//        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(new_sprint, fieldObjectList, user);
 
-        List<FieldObject> fieldObjectList = makeFieldObjectList(sprintFieldEntries);
-        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(new_sprint, fieldObjectList, user);
-
-        return new SuccessResponseEntity<>(responseDto, HttpStatus.CREATED);
+        return getOneSprint(user, new_sprint.getId());
     }
 
     @Transactional
     public SuccessResponseEntity<SprintDetailResponseDto> getOneSprint(
             User user, Long sprintId
     ) {
-        Sprint sprint = loadSprintById(sprintId);    //나중에 쿼리 한번으로 리팩토링
+        Sprint sprint = loadSprintById(sprintId);    //나중에 쿼리좀 다듬어서 리팩토링
         List<SprintFieldEntry> entries = loadFieldsBySprintId(sprintId);
         List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
-        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(sprint,fieldObjectList, user);
-        //        List<CommentResponseDto> comments = commentService.getCommentsOnSprint(sprintId, user);
+        List<CommentResponseDto> comments = commentService.getCommentsOnSprint(sprintId, user);
+        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(sprint,fieldObjectList, user, comments);
+
+
 
         return new SuccessResponseEntity<>(responseDto, HttpStatus.OK);
     }
