@@ -1,4 +1,4 @@
-package com.example.sprintserver.user.security;
+package com.example.sprintserver.common.security;
 
 import com.example.sprintserver.user.entity.User;
 import com.example.sprintserver.user.repository.UserRepository;

@@ -3,6 +3,7 @@ package com.example.sprintserver.user.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
@@ -17,6 +18,7 @@ public class SignupRequestDto {
 //            message = "비밀번호는 8-15자 알파벳 대소문자, 숫자, 특수문자로 작성해주세요.")
     private String password;
 
+//    @NotNull(message = "닉네임을 입력해주세요.")
     private String nickname;
 
 //    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
