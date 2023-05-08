@@ -1,9 +1,14 @@
 package com.example.sprintserver.comment.controller;
 
 import com.example.sprintserver.comment.dto.CommentRequestDto;
+import com.example.sprintserver.comment.entity.Comment;
 import com.example.sprintserver.comment.service.CommentService;
 import com.example.sprintserver.common.Message;
 import com.example.sprintserver.common.security.UserDetailsImpl;
+import com.example.sprintserver.sprint.dto.SprintListResponseDto;
+import com.example.sprintserver.sprint.sprint_utils.SuccessResponseEntity;
+import com.example.sprintserver.user.entity.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,5 +47,13 @@ public class CommentController {
             @PathVariable Long commentId,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity.ok().body(commentService.deleteComment(sprintId, commentId, userDetails.getUser()));
+    }
+
+    @GetMapping("/d/{sprintId}")
+    public ResponseEntity<?> getCommentsOnSprint(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long sprintId
+    ) {
+        return ResponseEntity.ok().body(( commentService.getCommentsOnSprint(sprintId, userDetails.getUser())));
     }
 }

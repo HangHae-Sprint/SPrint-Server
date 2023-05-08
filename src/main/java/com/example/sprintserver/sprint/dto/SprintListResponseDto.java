@@ -1,5 +1,6 @@
 package com.example.sprintserver.sprint.dto;
 
+import com.example.sprintserver.comment.dto.StatusEnum;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -30,4 +31,5 @@ public class SprintListResponseDto {
         this.sprintType = sprintType;
         this.fieldObjectList = fieldObjects;
     }
+
 }
