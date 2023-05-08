@@ -49,11 +49,4 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.deleteComment(sprintId, commentId, userDetails.getUser()));
     }
 
-    @GetMapping("/d/{sprintId}")
-    public ResponseEntity<?> getCommentsOnSprint(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long sprintId
-    ) {
-        return ResponseEntity.ok().body(( commentService.getCommentsOnSprint(sprintId, userDetails.getUser())));
-    }
 }
