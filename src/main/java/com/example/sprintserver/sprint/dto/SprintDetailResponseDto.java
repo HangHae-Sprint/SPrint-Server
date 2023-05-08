@@ -1,16 +1,14 @@
 package com.example.sprintserver.sprint.dto;
 
+import com.example.sprintserver.comment.dto.CommentResponseDto;
+import com.example.sprintserver.comment.entity.Comment;
 import com.example.sprintserver.sprint.entity.Sprint;
-import com.example.sprintserver.sprint.entity.SprintFieldEntry;
 import com.example.sprintserver.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Getter
 public class SprintDetailResponseDto {
@@ -24,10 +22,12 @@ public class SprintDetailResponseDto {
     private final String sprintType;
     private final List<FieldObject> fieldObjectList;
     private final Boolean isMySprint;
+    private final List<CommentResponseDto> commentList;
     @Builder
     public SprintDetailResponseDto(
-            Long sprintId, String title,String content, String nickname, Integer numLikes, LocalDateTime createdAt,
-            LocalDateTime modifiedAt, String sprintType, List<FieldObject> fieldObjectList, Boolean isMySprint
+            Long sprintId, String title,String content, String nickname, Integer numLikes,
+            LocalDateTime createdAt, LocalDateTime modifiedAt, String sprintType,
+            List<FieldObject> fieldObjectList, Boolean isMySprint, List<CommentResponseDto> commentList
     ) {
         this.sprintId = sprintId;
         this.title = title;
@@ -39,9 +39,12 @@ public class SprintDetailResponseDto {
         this.sprintType = sprintType;
         this.fieldObjectList = fieldObjectList;
         this.isMySprint = isMySprint;
+        this.commentList = commentList;
     }
 
-    public SprintDetailResponseDto(Sprint sprint, List<FieldObject> fieldObjectList, User user) {
+    public SprintDetailResponseDto(
+            Sprint sprint, List<FieldObject> fieldObjectList, User user, List<CommentResponseDto> commentList
+    ) {
 
         this(
                 sprint.getId(),
@@ -53,7 +56,8 @@ public class SprintDetailResponseDto {
                 sprint.getModifiedAt(),
                 sprint.getSprintType().toString(),
                 fieldObjectList,
-                sprint.getUser().getId().equals(user.getId())
+                sprint.getUser().getId().equals(user.getId()),
+                commentList
         );
     }
 //                builder()

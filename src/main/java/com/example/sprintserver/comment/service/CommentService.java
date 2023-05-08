@@ -32,6 +32,7 @@ public class CommentService {
         Sprint sprint = sprintRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
+
         // 요청 받은 DTO로 DB에 저장할 객체 만들기
         Comment comment = commentRepository.save(new Comment(commentRequestDto, sprint, user));
 
