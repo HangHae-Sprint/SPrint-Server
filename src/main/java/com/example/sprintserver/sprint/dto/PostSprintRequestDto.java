@@ -3,7 +3,6 @@ package com.example.sprintserver.sprint.dto;
 import com.example.sprintserver.sprint.entity.Sprint;
 import com.example.sprintserver.sprint.entity.SprintFieldEntry;
 import com.example.sprintserver.sprint.enums.SprintTypeEnum;
-import com.example.sprintserver.sprint.exception.InvalidParameterException;
 import com.example.sprintserver.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +17,13 @@ public class PostSprintRequestDto {
     private String title;
     private String content;
     private String sprintType;
-    private List<FieldTupleDto> fieldsInfo;
+    private List<FieldTupleDto> fieldInfoList;
 
-    public PostSprintRequestDto(String title, String content, String sprintType, List<FieldTupleDto> fieldsInfo) {
+    public PostSprintRequestDto(String title, String content, String sprintType, List<FieldTupleDto> fieldInfoList) {
         this.title = title;
         this.content = content;
         this.sprintType = sprintType;
-        this.fieldsInfo = fieldsInfo;
+        this.fieldInfoList = fieldInfoList;
     }
 
     public Sprint toSprintEntity(User user) {
@@ -38,16 +37,16 @@ public class PostSprintRequestDto {
 
     public List<SprintFieldEntry> toSprintFieldEntryList(Sprint sprint) {
         List<SprintFieldEntry> entries = new ArrayList<>();
-        for(int i = 0; i<this.fieldsInfo.size(); i++){
-            if(!fieldsInfo.get(i).getFieldMaxNum().equals(0)){
-                SprintFieldEntry entry = toEntry(i+1, fieldsInfo.get(i), sprint);
+        for(int i = 0; i<this.fieldInfoList.size(); i++){
+            if(!fieldInfoList.get(i).getFieldMaxNum().equals(0)){
+                SprintFieldEntry entry = toSprintFieldEntry(i+1, fieldInfoList.get(i), sprint);
                 entries.add(entry);
             }
         }
         return entries;
     }
 
-    private SprintFieldEntry toEntry(Integer fieldIdx, FieldTupleDto field, Sprint sprint){
+    private SprintFieldEntry toSprintFieldEntry(Integer fieldIdx, FieldTupleDto field, Sprint sprint){
         return SprintFieldEntry.builder()
                 .fieldIdx(fieldIdx)
                 .sprint(sprint)
