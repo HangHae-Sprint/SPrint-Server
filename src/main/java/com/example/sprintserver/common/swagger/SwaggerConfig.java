@@ -1,3 +1,4 @@
+
 package com.example.sprintserver.common.swagger;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -24,3 +25,4 @@ public class SwaggerConfig {
                 .build();
     }
 }
+
