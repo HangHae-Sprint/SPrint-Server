@@ -7,6 +7,7 @@ import com.example.sprintserver.comment.dto.StatusEnum;
 import com.example.sprintserver.comment.entity.Comment;
 import com.example.sprintserver.comment.repository.CommentRepository;
 import com.example.sprintserver.common.Message;
+import com.example.sprintserver.sprint.dto.SprintListResponseDto;
 import com.example.sprintserver.sprint.entity.Sprint;
 import com.example.sprintserver.sprint.repository.SprintRepository;
 import com.example.sprintserver.user.entity.User;
@@ -14,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +36,7 @@ public class CommentService {
         // 요청 받은 DTO로 DB에 저장할 객체 만들기
         Comment comment = commentRepository.save(new Comment(commentRequestDto, sprint, user));
 
-        return new CommentOneResponseDto(StatusEnum.OK, comment);
+        return new CommentOneResponseDto(StatusEnum.OK, comment, user);
     }
 
     @Transactional
@@ -62,7 +65,7 @@ public class CommentService {
         // 요청 받은 DTO로 DB에 업데이트
         comment.update(commentRequestDto);
 
-        return new CommentOneResponseDto(StatusEnum.OK, comment);
+        return new CommentOneResponseDto(StatusEnum.OK, comment, user);
     }
 
     @Transactional
@@ -92,5 +95,19 @@ public class CommentService {
         commentRepository.deleteById(commentId);
 
         return new Message(StatusEnum.OK);
+    }
+
+    @Transactional
+    public List<CommentResponseDto> getCommentsOnSprint(Long sprintId, User user) {
+        List<Comment> commentList = commentRepository.findAllBySprint_IdOrderByCreatedAt(sprintId);
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        for(Comment comment: commentList){
+            commentResponseDtoList.add(new CommentResponseDto(comment, user));
+        }
+//        return commentRepository.findAllBySprint_IdOrderByCreatedAt(sprintId).stream()
+//                .map(c -> new CommentResponseDto(c, user))
+//                .collect(Collectors.toList());
+
+        return commentResponseDtoList;
     }
 }
