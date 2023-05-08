@@ -13,7 +13,7 @@ public class FieldObject {
     private final Integer fieldMaxNum;
 
     @Builder
-    public FieldObject(String fieldName, Integer fieldMax, Integer fieldNow) {
+    public FieldObject(String fieldName, Integer fieldNow, Integer fieldMax) {
         this.fieldName = fieldName;
         this.nowMemberCount = fieldNow;
         this.fieldMaxNum = fieldMax;

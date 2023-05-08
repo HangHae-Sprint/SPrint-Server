@@ -31,11 +31,11 @@ public class SprintService {
 
     @Transactional
     public SuccessResponseEntity<SprintDetailResponseDto> postSprint(
-            User user, PostSprintRequestDto requestDto
+            User user, PostSprintRequestDto requestDto // Transaction 확인해보고, 쿼리 중복으로 안 나갈 시 getOneSprint로 반환하기
     ) {
         Sprint new_sprint = requestDto.toSprintEntity(user);
+        System.out.println("requestDto.getFieldsInfo() = " + requestDto.getFieldInfoList());
         sprintRepository.save(new_sprint);
-
         List<SprintFieldEntry> sprintFieldEntries = requestDto.toSprintFieldEntryList(new_sprint);
         sprintFieldEntryRepository.saveAll(sprintFieldEntries);
 
