@@ -1,16 +1,12 @@
 package com.example.sprintserver.sprint.dto;
 
 import com.example.sprintserver.sprint.entity.Sprint;
-import com.example.sprintserver.sprint.entity.SprintFieldEntry;
 import com.example.sprintserver.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Getter
 public class SprintDetailResponseDto {

@@ -20,7 +20,7 @@ public class SprintController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         User user = userDetails.getUser();
-        return sprintService.getAllSprintList();
+        return sprintService.getAllSprintList(user);
     }
 
     @PostMapping // sprint 등록

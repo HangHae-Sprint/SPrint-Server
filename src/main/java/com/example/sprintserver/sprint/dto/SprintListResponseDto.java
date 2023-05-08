@@ -1,5 +1,7 @@
 package com.example.sprintserver.sprint.dto;
 
+import com.example.sprintserver.sprint.entity.Sprint;
+import com.example.sprintserver.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -29,5 +31,20 @@ public class SprintListResponseDto {
         this.modifiedAt = modifiedAt;
         this.sprintType = sprintType;
         this.fieldObjectList = fieldObjects;
+    }
+
+
+    public SprintListResponseDto(Sprint sprint, List<FieldObject> fieldObjectList, User user) {
+
+        this(
+                sprint.getId(),
+                sprint.getTitle(),
+                user.getNickname(),
+                sprint.getNumLikes(),
+                sprint.getCreatedAt(),
+                sprint.getModifiedAt(),
+                sprint.getSprintType().toString(),
+                fieldObjectList
+        );
     }
 }

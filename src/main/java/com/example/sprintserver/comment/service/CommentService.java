@@ -2,6 +2,7 @@ package com.example.sprintserver.comment.service;
 
 import com.example.sprintserver.comment.dto.CommentOneResponseDto;
 import com.example.sprintserver.comment.dto.CommentRequestDto;
+import com.example.sprintserver.comment.dto.CommentResponseDto;
 import com.example.sprintserver.comment.dto.StatusEnum;
 import com.example.sprintserver.comment.entity.Comment;
 import com.example.sprintserver.comment.repository.CommentRepository;
@@ -12,6 +13,8 @@ import com.example.sprintserver.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
