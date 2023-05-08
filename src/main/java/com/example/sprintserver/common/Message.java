@@ -1,5 +1,6 @@
 package com.example.sprintserver.common;
 
+import com.example.sprintserver.comment.dto.StatusEnum;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -14,4 +15,8 @@ public class Message {
         this.statuscode = httpStatus.value();
     }
 
+    public Message(StatusEnum status) {
+        this.statuscode = status.statuscode;
+        this.msg = status.msg;
+    }
 }
