@@ -1,6 +1,6 @@
 package com.example.sprintserver.user.jwt;
 
-import com.example.sprintserver.user.security.UserDetailsServiceImpl;
+import com.example.sprintserver.common.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;

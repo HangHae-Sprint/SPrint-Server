@@ -5,7 +5,7 @@ import com.example.sprintserver.sprint.dto.*;
 import com.example.sprintserver.sprint.service.SprintService;
 import com.example.sprintserver.sprint.sprint_utils.SuccessResponseEntity;
 import com.example.sprintserver.user.entity.User;
-import com.example.sprintserver.user.security.UserDetailsImpl;
+import com.example.sprintserver.common.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
