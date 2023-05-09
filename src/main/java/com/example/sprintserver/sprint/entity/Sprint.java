@@ -38,6 +38,6 @@ public class Sprint extends Timestamped {
 
     public void setTitle(String new_title){ this.title = new_title; }
     public void setContent(String new_content) { this.content = new_content; }
-    public void flagDeleted(){ this.isDeleted = true; }
+    public void setDeleted(Boolean isDeleted){ this.isDeleted = isDeleted; }
     public void setSprintType(SprintTypeEnum new_type) { this.sprintType = new_type; }
 }
