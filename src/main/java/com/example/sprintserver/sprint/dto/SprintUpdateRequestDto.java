@@ -9,4 +9,9 @@ import lombok.NoArgsConstructor;
 public class SprintUpdateRequestDto {
     private String title;
     private String content;
+
+    public SprintUpdateRequestDto(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
