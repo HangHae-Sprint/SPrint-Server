@@ -41,7 +41,10 @@ public class SprintService {
 
         List<SprintListResponseDto> responseContainer = new ArrayList<>();
         for(Sprint sprint:sprintList){
+            System.out.println("sprint.getId() = " + sprint.getId());
+            System.out.println("sprintEntryMap.get(sprint.getId()) = " + sprintEntryMap.get(sprint.getId()));
             List<SprintFieldEntry> entries = sprintEntryMap.get(sprint.getId());
+            
             List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
             SprintListResponseDto responseDto = new SprintListResponseDto(sprint, fieldObjectList, user);
             responseContainer.add(responseDto);
@@ -55,15 +58,15 @@ public class SprintService {
             User user, PostSprintRequestDto requestDto // Transaction 확인해보고, 쿼리 중복으로 안 나갈 시 getOneSprint로 반환하기
     ) {
         Sprint new_sprint = requestDto.toSprintEntity(user);
-        System.out.println("requestDto.getFieldsInfo() = " + requestDto.getFieldInfoList());
         sprintRepository.save(new_sprint);
         List<SprintFieldEntry> sprintFieldEntries = requestDto.toSprintFieldEntryList(new_sprint);
         fieldEntryRepository.saveAll(sprintFieldEntries);
 //
-//        List<FieldObject> fieldObjectList = makeFieldObjectList(sprintFieldEntries);
-//        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(new_sprint, fieldObjectList, user);
+        List<FieldObject> fieldObjectList = makeFieldObjectList(sprintFieldEntries);
+        List<CommentResponseDto> emptyComment = new ArrayList<>();
+        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(new_sprint, fieldObjectList, user,emptyComment);
 
-        return getOneSprint(user, new_sprint.getId());
+        return new SuccessResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @Transactional
@@ -117,6 +120,7 @@ public class SprintService {
         return new SuccessResponseEntity<>(new SprintMessage(MessageEnum.JOINED), HttpStatus.OK);
     }
 
+    @Transactional
     public SuccessResponseEntity<SprintDetailResponseDto> updateSprint(
             User user, Long sprintId, SprintUpdateRequestDto requestDto
     ) {
