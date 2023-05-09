@@ -40,4 +40,6 @@ public class Sprint extends Timestamped {
     public void setContent(String new_content) { this.content = new_content; }
     public void setDeleted(Boolean isDeleted){ this.isDeleted = isDeleted; }
     public void setSprintType(SprintTypeEnum new_type) { this.sprintType = new_type; }
+
+    public void updateLike(boolean plusMinus) { this.numLikes = plusMinus? this.numLikes+1 : this.numLikes-1; }
 }
