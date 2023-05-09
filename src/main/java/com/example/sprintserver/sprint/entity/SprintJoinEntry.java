@@ -19,14 +19,15 @@ public class SprintJoinEntry extends Timestamped {
     private Long id;
     private Long userId;
     private Long sprintId;
-    private Long fieldIdx;
+    private Integer fieldIdx;
+    private String githubLink;
 
     @Builder
-    public SprintJoinEntry(Long id,Long userId, Long sprintId, Long fieldIdx) {
-        this.id = id;
+    public SprintJoinEntry(Long userId, Long sprintId, Integer fieldIdx, String githubLink) {
         this.userId = userId;
         this.sprintId = sprintId;
         this.fieldIdx = fieldIdx;
+        this.githubLink = githubLink;
     }
 
 }
