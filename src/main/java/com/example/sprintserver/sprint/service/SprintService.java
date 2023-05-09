@@ -136,7 +136,7 @@ public class SprintService {
 
     ////////////////내부 메소드들////////////////////////
 
-    private Sprint loadSprintById(Long sprintId){
+    public Sprint loadSprintById(Long sprintId){
         Sprint sprint =  sprintRepository.findById(sprintId).orElseThrow(
                 () -> new SprintNotFoundException("SprintId not found")
         );
