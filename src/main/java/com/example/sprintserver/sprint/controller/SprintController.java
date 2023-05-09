@@ -1,6 +1,5 @@
 package com.example.sprintserver.sprint.controller;
 
-import com.example.sprintserver.common.Message;
 import com.example.sprintserver.sprint.dto.*;
 import com.example.sprintserver.sprint.service.SprintService;
 import com.example.sprintserver.sprint.sprint_utils.SprintMessage;
@@ -53,7 +52,7 @@ public class SprintController {
     public SuccessResponseEntity<SprintDetailResponseDto> updateSprint(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long sprintId,
-            @RequestBody UpdateSprintRequestDto requestDto
+            @RequestBody SprintUpdateRequestDto requestDto
     ){
         User user = userDetails.getUser();
         return sprintService.updateSprint(user, sprintId, requestDto);

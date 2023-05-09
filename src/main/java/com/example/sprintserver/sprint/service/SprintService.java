@@ -2,7 +2,6 @@ package com.example.sprintserver.sprint.service;
 
 import com.example.sprintserver.comment.dto.CommentResponseDto;
 import com.example.sprintserver.comment.service.CommentService;
-import com.example.sprintserver.common.Message;
 import com.example.sprintserver.sprint.dto.*;
 import com.example.sprintserver.sprint.entity.Sprint;
 import com.example.sprintserver.sprint.entity.SprintFieldEntry;
@@ -15,7 +14,6 @@ import com.example.sprintserver.sprint.sprint_utils.MessageEnum;
 import com.example.sprintserver.sprint.sprint_utils.SprintMessage;
 import com.example.sprintserver.sprint.sprint_utils.SuccessResponseEntity;
 import com.example.sprintserver.user.entity.User;
-import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -120,9 +118,19 @@ public class SprintService {
     }
 
     public SuccessResponseEntity<SprintDetailResponseDto> updateSprint(
-            User user, Long sprintId, UpdateSprintRequestDto requestDto
+            User user, Long sprintId, SprintUpdateRequestDto requestDto
     ) {
-        return null;
+        Sprint sprint = loadSprintById(sprintId);
+        checkSprintOwner(sprint, user);
+        sprint.setTitle(requestDto.getTitle());
+        sprint.setContent(requestDto.getContent());
+        List<SprintFieldEntry> entries = fieldEntryRepository.findAllBySprintId(sprintId);
+        List<CommentResponseDto> comments = commentService.getCommentsOnSprint(sprintId, user);
+        List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
+
+        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(sprint,fieldObjectList, user, comments);
+
+        return new SuccessResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 
