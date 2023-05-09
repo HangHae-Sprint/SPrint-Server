@@ -32,10 +32,6 @@ public class SprintController {
             @RequestBody PostSprintRequestDto requestDto
     ){
         User user = userDetails.getUser();
-        System.out.println("requestDto.getTitle() = " + requestDto.getTitle());
-        System.out.println("requestDto.getContent() = " + requestDto.getContent());
-        System.out.println("requestDto = " + requestDto.getFieldInfoList());
-        System.out.println("requestDto.getSprintType() = " + requestDto.getSprintType());
         return sprintService.postSprint(user, requestDto);
     }
 

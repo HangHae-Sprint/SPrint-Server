@@ -19,9 +19,17 @@ public class SprintFieldEntry extends Timestamped {
 
     @ManyToOne
     private Sprint sprint;
+
+    @Column(nullable = false)
     private Integer fieldIdx;
+
+    @Column(nullable = false)
     private String fieldName;
+
+    @Column(nullable = false)
     private Integer fieldMax;
+
+    @Column(nullable = false)
     private Integer fieldMemberCount = 0;
 
     @Builder

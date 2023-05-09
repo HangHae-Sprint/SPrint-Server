@@ -41,10 +41,7 @@ public class SprintService {
 
         List<SprintListResponseDto> responseContainer = new ArrayList<>();
         for(Sprint sprint:sprintList){
-            System.out.println("sprint.getId() = " + sprint.getId());
-            System.out.println("sprintEntryMap.get(sprint.getId()) = " + sprintEntryMap.get(sprint.getId()));
             List<SprintFieldEntry> entries = sprintEntryMap.get(sprint.getId());
-            
             List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
             SprintListResponseDto responseDto = new SprintListResponseDto(sprint, fieldObjectList, user);
             responseContainer.add(responseDto);

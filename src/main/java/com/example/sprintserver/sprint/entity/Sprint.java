@@ -21,10 +21,20 @@ public class Sprint extends Timestamped {
 
     @ManyToOne
     private User user;
+
+    @Column(nullable = false)
     private SprintTypeEnum sprintType;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String content;
+
+    @Column(nullable = false)
     private Boolean isDeleted = false;
+
+    @Column(nullable = false)
     private Integer numLikes = 0;
 
     @Builder
