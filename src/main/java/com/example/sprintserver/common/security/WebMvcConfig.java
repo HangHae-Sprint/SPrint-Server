@@ -17,5 +17,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
                 .exposedHeaders(JwtUtil.AUTHORIZATION_HEADER)
                 .allowCredentials(true);
+
     }
 }
