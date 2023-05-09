@@ -30,9 +30,7 @@ public class SprintService {
     private final CommentService commentService;
     @Transactional
     public SuccessResponseEntity<SprintListResponseDto> getAllSprintList(User user) {  //리팩토링 대상
-        System.out.println("체크포인트1");
         List<Sprint> sprintList = sprintRepository.findAll();
-        System.out.println("체크포인트2");
         Map<Long, List<SprintFieldEntry>> sprintEntryMap = sprintFieldEntryRepository.findAll()
                 .stream()
                 .filter(e -> e.getFieldIdx() != null)
@@ -74,8 +72,6 @@ public class SprintService {
         List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
         List<CommentResponseDto> comments = commentService.getCommentsOnSprint(sprintId, user);
         SprintDetailResponseDto responseDto = new SprintDetailResponseDto(sprint,fieldObjectList, user, comments);
-
-
 
         return new SuccessResponseEntity<>(responseDto, HttpStatus.OK);
     }
