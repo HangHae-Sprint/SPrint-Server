@@ -1,12 +1,11 @@
 package com.example.sprintserver.sprint.controller;
 
+import com.example.sprintserver.common.security.UserDetailsImpl;
 import com.example.sprintserver.sprint.dto.*;
-import com.example.sprintserver.sprint.repository.SprintRepository;
 import com.example.sprintserver.sprint.service.SprintService;
 import com.example.sprintserver.sprint.sprint_utils.SprintMessage;
 import com.example.sprintserver.sprint.sprint_utils.SuccessResponseEntity;
 import com.example.sprintserver.user.entity.User;
-import com.example.sprintserver.common.security.UserDetailsImpl;
 import com.example.sprintserver.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
