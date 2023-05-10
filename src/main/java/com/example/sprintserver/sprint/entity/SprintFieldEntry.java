@@ -33,12 +33,11 @@ public class SprintFieldEntry extends Timestamped {
     private Integer fieldMemberCount = 0;
 
     @Builder
-    public SprintFieldEntry(Sprint sprint, Integer fieldIdx, String fieldName, Integer fieldMax, Integer fieldMemberCount) {
+    public SprintFieldEntry(Sprint sprint, Integer fieldIdx, String fieldName, Integer fieldMax) {
         this.sprint = sprint;
         this.fieldIdx = fieldIdx;
         this.fieldName = fieldName;
         this.fieldMax = fieldMax;
-//        this.fieldMemberCount = fieldMemberCount;
     }
 
     public void setFieldName(String new_fieldName){ this.fieldName = new_fieldName; }

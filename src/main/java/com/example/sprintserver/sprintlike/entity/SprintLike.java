@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Entity(name = "likes")
 @NoArgsConstructor
-public class sprintLike {
+public class SprintLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class sprintLike {
     @JoinColumn(name = "sprint_id")
     private Sprint sprint;
 
-    public sprintLike(User user, Sprint sprint) {
+    public SprintLike(User user, Sprint sprint) {
         this.user = user;
         this.sprint = sprint;
     }
