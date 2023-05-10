@@ -1,7 +1,9 @@
 package com.example.sprintserver.sprint.exception;
 
-public class MySprintException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+
+public class MySprintException extends CustomExceptionWithStatus{
     public MySprintException(String message) {
-        super(message);
+        super(message, HttpStatus.BAD_REQUEST);
     }
 }

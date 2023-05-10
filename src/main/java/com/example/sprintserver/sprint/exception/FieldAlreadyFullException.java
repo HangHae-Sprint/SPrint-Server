@@ -1,7 +1,9 @@
 package com.example.sprintserver.sprint.exception;
 
-public class FieldAlreadyFullException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+
+public class FieldAlreadyFullException extends CustomExceptionWithStatus{
     public FieldAlreadyFullException(String message) {
-        super(message);
+        super(message, HttpStatus.NOT_ACCEPTABLE);
     }
 }

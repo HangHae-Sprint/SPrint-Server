@@ -9,4 +9,8 @@ public class SprintMessage {
     public SprintMessage(MessageEnum messageEnum) {
         this.message = messageEnum.getMessage();
     }
+
+    public SprintMessage(String message) {
+        this.message = message;
+    }
 }
