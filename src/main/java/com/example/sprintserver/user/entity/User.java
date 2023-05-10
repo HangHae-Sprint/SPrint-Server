@@ -29,19 +29,6 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-//    @OneToMany
-//    private List<Sprint> sprintList = new ArrayList<>();
-//
-//    @OneToMany
-//    private List<SprintLike> sprintLikeList = new ArrayList<>();
-//
-//    @OneToMany
-//    private List<Comment> commentList = new ArrayList<>();
-//
-//    @OneToMany
-//    private List<Join> joinList = new ArrayList<>();
-
-
     public User(String username, String nickname, String password, String email) {
         this.username = username;
         this.nickname = nickname;

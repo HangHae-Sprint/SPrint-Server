@@ -18,10 +18,11 @@ public class SprintListResponseDto {
     private final LocalDateTime modifiedAt;
     private final String sprintType;
     private final List<FieldObject> fieldObjectList;
+    private final Boolean isLiked;
     @Builder
     public SprintListResponseDto(
-            Long sprintId, String title, String nickname, Integer numLikes,
-            LocalDateTime createdAt, LocalDateTime modifiedAt, String sprintType, List<FieldObject> fieldObjects
+            Long sprintId, String title, String nickname, Integer numLikes, LocalDateTime createdAt,
+            LocalDateTime modifiedAt, String sprintType, List<FieldObject> fieldObjects, Boolean isLiked
     ) {
         this.sprintId = sprintId;
         this.title = title;
@@ -31,10 +32,11 @@ public class SprintListResponseDto {
         this.modifiedAt = modifiedAt;
         this.sprintType = sprintType;
         this.fieldObjectList = fieldObjects;
+        this.isLiked = isLiked;
     }
 
 
-    public SprintListResponseDto(Sprint sprint, List<FieldObject> fieldObjectList, User user) {
+    public SprintListResponseDto(Sprint sprint, List<FieldObject> fieldObjectList, User user, List<Long> userLikedSprint) {
 
         this(
                 sprint.getId(),
@@ -44,7 +46,8 @@ public class SprintListResponseDto {
                 sprint.getCreatedAt(),
                 sprint.getModifiedAt(),
                 sprint.getSprintType().toString(),
-                fieldObjectList
+                fieldObjectList,
+                userLikedSprint.contains(sprint.getId())
         );
     }
 }

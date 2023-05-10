@@ -1,11 +1,13 @@
 package com.example.sprintserver.sprint.controller;
 
 import com.example.sprintserver.sprint.dto.*;
+import com.example.sprintserver.sprint.repository.SprintRepository;
 import com.example.sprintserver.sprint.service.SprintService;
 import com.example.sprintserver.sprint.sprint_utils.SprintMessage;
 import com.example.sprintserver.sprint.sprint_utils.SuccessResponseEntity;
 import com.example.sprintserver.user.entity.User;
 import com.example.sprintserver.common.security.UserDetailsImpl;
+import com.example.sprintserver.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,11 +20,20 @@ import java.util.List;
 @RequestMapping("api/sprint")
 public class SprintController {
     private final SprintService sprintService;
+    private final UserRepository userRepository;    // 임시코드
     @GetMapping  // 모든 sprint 조회
     public ResponseEntity<List<SprintListResponseDto>> getAllSprintList(
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-        User user = userDetails.getUser();
+        User user;
+        if(userDetails == null){
+            user = userRepository.findById(38L).orElseThrow(() -> new IllegalArgumentException("ananymous없음"));
+        }
+        else{
+            user = userDetails.getUser();
+        }
+//        User user = userDetails.getUser();
+
         return sprintService.getAllSprintList(user);
     }
 
@@ -32,10 +43,6 @@ public class SprintController {
             @RequestBody PostSprintRequestDto requestDto
     ){
         User user = userDetails.getUser();
-        System.out.println("requestDto.getTitle() = " + requestDto.getTitle());
-        System.out.println("requestDto.getContent() = " + requestDto.getContent());
-        System.out.println("requestDto = " + requestDto.getFieldInfoList());
-        System.out.println("requestDto.getSprintType() = " + requestDto.getSprintType());
         return sprintService.postSprint(user, requestDto);
     }
 
@@ -75,6 +82,22 @@ public class SprintController {
             ){
         User user = userDetails.getUser();
         return sprintService.joinSprint(user, sprintId, requestDto);
+    }
+
+    @GetMapping("/mysprint")
+    public SuccessResponseEntity<List<SprintListResponseDto>> getMySprintList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        User user = userDetails.getUser();
+        return sprintService.getMySprintList(user);
+    }
+
+    @GetMapping("/joinlist")
+    public SuccessResponseEntity<List<SprintListResponseDto>> getJoinList(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        User user = userDetails.getUser();
+        return sprintService.getJoinList(user);
     }
 
 

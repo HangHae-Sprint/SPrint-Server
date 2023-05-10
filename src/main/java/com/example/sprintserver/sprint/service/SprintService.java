@@ -13,6 +13,7 @@ import com.example.sprintserver.sprint.repository.SprintRepository;
 import com.example.sprintserver.sprint.sprint_utils.MessageEnum;
 import com.example.sprintserver.sprint.sprint_utils.SprintMessage;
 import com.example.sprintserver.sprint.sprint_utils.SuccessResponseEntity;
+import com.example.sprintserver.sprintlike.repository.SprintLikeRepository;
 import com.example.sprintserver.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,16 @@ public class SprintService {
     private final SprintFieldEntryRepository fieldEntryRepository;
     private final CommentService commentService;
     private final SprintJoinEntryRepository joinEntryRepository;
+    private final SprintLikeRepository sprintLikeRepository;
     @Transactional
     public SuccessResponseEntity<List<SprintListResponseDto>> getAllSprintList(User user) {  //리팩토링 대상
         List<Sprint> sprintList = sprintRepository.findAllByIsDeletedFalse();
+
+        List<Long> userLikedSprintId = sprintLikeRepository.findAllByUser(user)
+                .stream()
+                .map(l -> l.getSprint().getId())
+                .toList();
+
         Map<Long, List<SprintFieldEntry>> sprintEntryMap = fieldEntryRepository.findAll()
                 .stream()
                 .filter(e -> e.getFieldIdx() != null)
@@ -41,12 +49,9 @@ public class SprintService {
 
         List<SprintListResponseDto> responseContainer = new ArrayList<>();
         for(Sprint sprint:sprintList){
-            System.out.println("sprint.getId() = " + sprint.getId());
-            System.out.println("sprintEntryMap.get(sprint.getId()) = " + sprintEntryMap.get(sprint.getId()));
             List<SprintFieldEntry> entries = sprintEntryMap.get(sprint.getId());
-            
             List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
-            SprintListResponseDto responseDto = new SprintListResponseDto(sprint, fieldObjectList, user);
+            SprintListResponseDto responseDto = new SprintListResponseDto(sprint, fieldObjectList, user, userLikedSprintId);
             responseContainer.add(responseDto);
         }
 
@@ -135,6 +140,63 @@ public class SprintService {
         SprintDetailResponseDto responseDto = new SprintDetailResponseDto(sprint,fieldObjectList, user, comments);
 
         return new SuccessResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+
+    @Transactional
+    public SuccessResponseEntity<List<SprintListResponseDto>> getMySprintList(User user) {
+        List<Sprint> sprintList = sprintRepository.findAllByUserAndIsDeletedFalse(user);
+        List<Long> userLikedSprintId = sprintLikeRepository.findAllByUser(user)
+                .stream()
+                .map(l -> l.getSprint().getId())
+                .toList();
+        Map<Long, List<SprintFieldEntry>> sprintEntryMap = fieldEntryRepository.findAll()
+                .stream()
+                .filter(e -> e.getFieldIdx() != null)
+                .collect(Collectors.groupingBy(s -> s.getSprint().getId()));
+
+        List<SprintListResponseDto> responseContainer = new ArrayList<>();
+        for(Sprint sprint:sprintList){
+            List<SprintFieldEntry> entries = sprintEntryMap.get(sprint.getId());
+            List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
+            SprintListResponseDto responseDto = new SprintListResponseDto(sprint, fieldObjectList, user, userLikedSprintId);
+            responseContainer.add(responseDto);
+        }
+
+
+        return new SuccessResponseEntity<>(responseContainer, HttpStatus.OK);
+    }
+
+    @Transactional
+    public SuccessResponseEntity<List<SprintListResponseDto>> getJoinList(User user) {
+
+        List<Long> userJoinedSprintIdList = joinEntryRepository.findAllByUserId(user.getId())
+                .stream()
+                .map(e -> e.getSprintId())
+                .toList();
+
+        List<Sprint> sprintList = sprintRepository.findAllByIsDeletedFalseAndIdIn(userJoinedSprintIdList);
+
+        List<Long> userLikedSprintId = sprintLikeRepository.findAllByUser(user)
+                .stream()
+                .map(l -> l.getSprint().getId())
+                .toList();
+
+        Map<Long, List<SprintFieldEntry>> sprintEntryMap = fieldEntryRepository.findAll()
+                .stream()
+                .filter(e -> e.getFieldIdx() != null)
+                .collect(Collectors.groupingBy(s -> s.getSprint().getId()));
+
+        List<SprintListResponseDto> responseContainer = new ArrayList<>();
+        for(Sprint sprint:sprintList){
+            List<SprintFieldEntry> entries = sprintEntryMap.get(sprint.getId());
+            List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
+            SprintListResponseDto responseDto = new SprintListResponseDto(sprint, fieldObjectList, user, userLikedSprintId);
+            responseContainer.add(responseDto);
+        }
+
+
+        return new SuccessResponseEntity<>(responseContainer, HttpStatus.OK);
     }
 
 
