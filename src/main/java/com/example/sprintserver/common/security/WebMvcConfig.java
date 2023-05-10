@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final static String CLIENT_URL = "http://43.200.169.48:3000/";
+    private final static String CLIENT_URL = "http://54.180.24.156:3000/";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

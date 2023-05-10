@@ -106,7 +106,7 @@ public class SprintService {
     public SuccessResponseEntity<SprintDetailResponseDto> getOneSprint(
             User user, Long sprintId
     ) {
-        Sprint sprint = loadSprintById(sprintId);    //나중에 쿼리좀 다듬어서 리팩토링
+        Sprint sprint = loadSprintById(sprintId);    //리팩토링 필요
         List<SprintFieldEntry> entries = fieldEntryRepository.findAllBySprintId(sprintId);
         List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
         List<CommentResponseDto> comments = commentService.getCommentsOnSprint(sprintId, user);
@@ -206,10 +206,10 @@ public class SprintService {
     }
 
     private Map<Long, List<SprintFieldEntry>> getAndMapFieldEntryToSprintId(List<Sprint> sprintList) {
-        return fieldEntryRepository.findAllBySprintIn(sprintList)
-                .stream()
-                .filter(e -> e.getFieldIdx() != null)
-                .collect(Collectors.groupingBy(s -> s.getSprint().getId()));
+            return fieldEntryRepository.findAllBySprintIn(sprintList)
+                    .stream()
+                    .filter(e -> e.getFieldIdx() != null)
+                    .collect(Collectors.groupingBy(s -> s.getSprint().getId()));
     }
 
     private List<SprintListResponseDto> mapToListResponse(User user, List<Sprint> sprintList, List<Long> userLikedSprintId, Map<Long, List<SprintFieldEntry>> sprintEntryMap) {
