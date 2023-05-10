@@ -1,4 +1,4 @@
-package com.example.sprintserver.sprint.sprint_utils;
+package com.example.sprintserver.common.ResponseEntity;
 
 import com.example.sprintserver.common.Message;
 import org.springframework.http.HttpStatus;

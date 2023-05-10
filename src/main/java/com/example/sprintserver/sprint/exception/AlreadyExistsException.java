@@ -1,8 +1,10 @@
 package com.example.sprintserver.sprint.exception;
 
-public class AlreadyExistsException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+
+public class AlreadyExistsException extends CustomExceptionWithStatus {
     public AlreadyExistsException(String message) {
-        super(message);
+        super(message, HttpStatus.CONFLICT);
     }
 
 }

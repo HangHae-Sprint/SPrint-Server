@@ -12,7 +12,8 @@ import com.example.sprintserver.sprint.repository.SprintJoinEntryRepository;
 import com.example.sprintserver.sprint.repository.SprintRepository;
 import com.example.sprintserver.sprint.sprint_utils.MessageEnum;
 import com.example.sprintserver.sprint.sprint_utils.SprintMessage;
-import com.example.sprintserver.sprint.sprint_utils.SuccessResponseEntity;
+import com.example.sprintserver.common.ResponseEntity.SuccessResponseEntity;
+import com.example.sprintserver.sprintlike.entity.SprintLike;
 import com.example.sprintserver.sprintlike.repository.SprintLikeRepository;
 import com.example.sprintserver.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -95,11 +96,13 @@ public class SprintService {
 //
         List<FieldObject> fieldObjectList = makeFieldObjectList(sprintFieldEntries);
         List<CommentResponseDto> emptyComment = new ArrayList<>();
-        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(new_sprint, fieldObjectList, user,emptyComment);
+        SprintDetailResponseDto responseDto = new SprintDetailResponseDto
+                (new_sprint, fieldObjectList, user,emptyComment, Boolean.FALSE);
 
         return new SuccessResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
+    //상세조회
     @Transactional
     public SuccessResponseEntity<SprintDetailResponseDto> getOneSprint(
             User user, Long sprintId
@@ -108,7 +111,9 @@ public class SprintService {
         List<SprintFieldEntry> entries = fieldEntryRepository.findAllBySprintId(sprintId);
         List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
         List<CommentResponseDto> comments = commentService.getCommentsOnSprint(sprintId, user);
-        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(sprint,fieldObjectList, user, comments);
+        Boolean isLikedSprint = sprintLikeRepository.existsByUserAndAndSprint(user, sprint);
+        SprintDetailResponseDto responseDto = new SprintDetailResponseDto
+                (sprint,fieldObjectList, user, comments, isLikedSprint);
 
         return new SuccessResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -162,8 +167,10 @@ public class SprintService {
         List<SprintFieldEntry> entries = fieldEntryRepository.findAllBySprintId(sprintId);
         List<CommentResponseDto> comments = commentService.getCommentsOnSprint(sprintId, user);
         List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
+        Boolean isLikedSprint = sprintLikeRepository.existsByUserAndAndSprint(user, sprint);
 
-        SprintDetailResponseDto responseDto = new SprintDetailResponseDto(sprint,fieldObjectList, user, comments);
+        SprintDetailResponseDto responseDto = new SprintDetailResponseDto
+                (sprint,fieldObjectList, user, comments,isLikedSprint);
 
         return new SuccessResponseEntity<>(responseDto, HttpStatus.OK);
     }

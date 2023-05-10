@@ -1,7 +1,9 @@
 package com.example.sprintserver.sprint.exception;
 
-public class UnAuthorizedRequestException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+
+public class UnAuthorizedRequestException extends CustomExceptionWithStatus{
     public UnAuthorizedRequestException(String message) {
-        super(message);
+        super(message, HttpStatus.UNAUTHORIZED);
     }
 }

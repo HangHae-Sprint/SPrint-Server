@@ -23,11 +23,13 @@ public class SprintDetailResponseDto {
     private final List<FieldObject> fieldObjectList;
     private final Boolean isMySprint;
     private final List<CommentResponseDto> commentList;
+    private Boolean isLiked = false;
     @Builder
     public SprintDetailResponseDto(
             Long sprintId, String title,String content, String nickname, Integer numLikes,
             LocalDateTime createdAt, LocalDateTime modifiedAt, String sprintType,
-            List<FieldObject> fieldObjectList, Boolean isMySprint, List<CommentResponseDto> commentList
+            List<FieldObject> fieldObjectList, Boolean isMySprint, List<CommentResponseDto> commentList,
+            Boolean isLiked
     ) {
         this.sprintId = sprintId;
         this.title = title;
@@ -40,10 +42,11 @@ public class SprintDetailResponseDto {
         this.fieldObjectList = fieldObjectList;
         this.isMySprint = isMySprint;
         this.commentList = commentList;
+        this.isLiked = isLiked;
     }
 
     public SprintDetailResponseDto(
-            Sprint sprint, List<FieldObject> fieldObjectList, User user, List<CommentResponseDto> commentList
+            Sprint sprint, List<FieldObject> fieldObjectList, User user, List<CommentResponseDto> commentList, Boolean isLiked
     ) {
 
         this(
@@ -57,7 +60,8 @@ public class SprintDetailResponseDto {
                 sprint.getSprintType().toString(),
                 fieldObjectList,
                 sprint.getUser().getId().equals(user.getId()),
-                commentList
+                commentList,
+                isLiked
         );
     }
 //                builder()
