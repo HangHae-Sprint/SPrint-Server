@@ -9,14 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
+    private final static String CLIENT_URL = "http://43.200.169.48:3000/";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("http://localhost:3000", CLIENT_URL)
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
                 .exposedHeaders(JwtUtil.AUTHORIZATION_HEADER)
                 .allowCredentials(true);
-
     }
 }
