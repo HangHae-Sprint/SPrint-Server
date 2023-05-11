@@ -7,6 +7,7 @@ import com.example.sprintserver.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class PostSprintRequestDto {
     private String title;
     private String content;
     private String sprintType;
+    @NotNull
     private List<FieldTupleDto> fieldInfoList;
 
     public PostSprintRequestDto(String title, String content, String sprintType, List<FieldTupleDto> fieldInfoList) {
