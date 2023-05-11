@@ -7,6 +7,9 @@ import com.example.sprintserver.user.entity.User;
 import com.example.sprintserver.user.jwt.JwtUtil;
 import com.example.sprintserver.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.logging.log4j2.Log4J2LoggingSystem;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,9 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserService {
 
@@ -48,8 +55,7 @@ public class UserService {
     public Message login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
-        System.out.println("username = " + username);
-        System.out.println("password = " + password);
+        log.info("username : " + username + " 로그인 at " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
 
         // 사용자 확인
         User user = userRepository.findByUsername(username).orElseThrow(

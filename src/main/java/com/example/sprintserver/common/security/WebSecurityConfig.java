@@ -68,7 +68,7 @@ public class WebSecurityConfig {
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         // 이 설정을 해주지 않으면 밑의 corsConfigurationSource가 적용되지 않습니다.
-//        http.cors();
+        http.cors();
 
         return http.build();
     }

@@ -16,16 +16,20 @@ import com.example.sprintserver.sprint.sprint_utils.SprintMessage;
 import com.example.sprintserver.sprintlike.repository.SprintLikeRepository;
 import com.example.sprintserver.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class SprintService {
     private final SprintRepository sprintRepository;
@@ -34,7 +38,8 @@ public class SprintService {
     private final SprintJoinEntryRepository joinEntryRepository;
     private final SprintLikeRepository sprintLikeRepository;
     @Transactional
-    public SuccessResponseEntity<List<SprintListResponseDto>> getAllSprintList(User user) {  //리팩토링 대상
+    public SuccessResponseEntity<List<SprintListResponseDto>> getAllSprintList(User user) {
+        log.info(user.getUsername() + "// method : getAllSprintList // time : " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         // to get target sprintList  (query + 1)
         List<Sprint> sprintList = sprintRepository.findAllByIsDeletedFalse();
 
@@ -52,6 +57,7 @@ public class SprintService {
 
     @Transactional
     public SuccessResponseEntity<List<SprintListResponseDto>> getMySprintList(User user) {
+        log.info(user.getUsername() + "// method : getMySprintList // time : " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         List<Sprint> sprintList = sprintRepository.findAllByUserAndIsDeletedFalse(user);
         List<Long> userLikedSprintId = getUserLikedSprintIdList(user);
         Map<Long, List<SprintFieldEntry>> sprintEntryMap = getAndMapFieldEntryToSprintId(sprintList);
@@ -62,6 +68,7 @@ public class SprintService {
 
     @Transactional
     public SuccessResponseEntity<List<SprintListResponseDto>> getJoinList(User user) {
+        log.info(user.getUsername() + "// method : getJoinSprintList // time : " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
 
         //Get List of SprintIds that this logged-in user joined (query + 1)
         List<Long> userJoinedSprintIdList = joinEntryRepository.findAllByUserId(user.getId())
@@ -88,6 +95,7 @@ public class SprintService {
     public SuccessResponseEntity<SprintDetailResponseDto> postSprint(
             User user, PostSprintRequestDto requestDto // Transaction 확인해보고, 쿼리 중복으로 안 나갈 시 getOneSprint로 반환하기
     ) {
+        log.info(user.getUsername() + "// method : PostSprint // time : " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         Sprint new_sprint = requestDto.toSprintEntity(user);
         sprintRepository.save(new_sprint);
         List<SprintFieldEntry> sprintFieldEntries = requestDto.toSprintFieldEntryList(new_sprint);
@@ -106,6 +114,7 @@ public class SprintService {
     public SuccessResponseEntity<SprintDetailResponseDto> getOneSprint(
             User user, Long sprintId
     ) {
+        log.info(user.getUsername() + "// method : getOneSprint " + sprintId + " // time : " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         Sprint sprint = loadSprintById(sprintId);    //리팩토링 필요
         List<SprintFieldEntry> entries = fieldEntryRepository.findAllBySprintId(sprintId);
         List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
@@ -121,6 +130,7 @@ public class SprintService {
     public SuccessResponseEntity<SprintMessage> deleteSprint(
             User user, Long sprintId
     ) {
+        log.info(user.getUsername() + "// method : deleteSprint " + sprintId + " // time : " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         Sprint sprint = loadSprintById(sprintId);
         if(!checkSprintOwner(sprint,user)){
             throw new UnAuthorizedRequestException("권한이 없습니다");
@@ -133,6 +143,7 @@ public class SprintService {
     public SuccessResponseEntity<SprintMessage> joinSprint(
             User user, Long sprintId, JoinSprintRequestDto requestDto
     ) {
+        log.info(user.getUsername() + "// method : joinSprint " + sprintId + " // time : " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         Sprint sprint = loadSprintById(sprintId);
         if(sprint.getUser().getId().equals(user.getId())){
             throw new MySprintException("내 스프린트에는 지원할 수 없습니다");
@@ -159,6 +170,7 @@ public class SprintService {
     public SuccessResponseEntity<SprintDetailResponseDto> updateSprint(
             User user, Long sprintId, SprintUpdateRequestDto requestDto
     ) {
+        log.info(user.getUsername() + "// method : updateSprint " + sprintId + " // time : " + ZonedDateTime.now(ZoneId.of("Asia/Seoul")));
         Sprint sprint = loadSprintById(sprintId);
         checkSprintOwner(sprint, user);
         sprint.setTitle(requestDto.getTitle());
