@@ -4,8 +4,6 @@ import com.example.sprintserver.sprint.entity.SprintFieldEntry;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Map;
-
 @Getter
 public class FieldObject {
     private final String fieldName;

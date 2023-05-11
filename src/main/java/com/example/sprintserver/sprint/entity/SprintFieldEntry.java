@@ -38,9 +38,5 @@ public class SprintFieldEntry extends Timestamped {
         this.fieldName = fieldName;
         this.fieldMax = fieldMax;
     }
-
-    public void setFieldName(String new_fieldName){ this.fieldName = new_fieldName; }
-    public void setFieldMax(Integer new_fieldMax){ this.fieldMax = new_fieldMax; }
     public void addFieldMember(){ this.fieldMemberCount++; }
-    public void minusFieldMember(){ this.fieldMemberCount--; }
 }

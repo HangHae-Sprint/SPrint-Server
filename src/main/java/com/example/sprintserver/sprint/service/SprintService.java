@@ -144,7 +144,6 @@ public class SprintService {
         if(joinEntryRepository.existsByUserIdAndSprintId(user.getId(), sprintId)){
             throw new AlreadyExistsException("이미 지원한 스프린트입니다");
         }
-        System.out.println("체크포인트1");
         if(field.getFieldMax() <= field.getFieldMemberCount()){
             throw new FieldAlreadyFullException("해당 포지션은 모집이 마감되었습니다");
         }
