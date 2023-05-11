@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
@@ -25,10 +26,6 @@ public class UserService {
 
     @Transactional
     public Message signup(SignupRequestDto signupRequestDto) {
-        System.out.println("signupRequestDto.getUsername() = " + signupRequestDto.getUsername());
-        System.out.println("rawpassword = " + signupRequestDto.getPassword());
-        System.out.println("signupRequestDto.getNickname() = " + signupRequestDto.getNickname());
-        System.out.println("signupRequestDto.getEmail() = " + signupRequestDto.getEmail());
 
         String username = signupRequestDto.getUsername();
         String nickname = signupRequestDto.getNickname();
@@ -65,5 +62,10 @@ public class UserService {
 
         response.addHeader(jwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), "ADMIN"));
         return new Message("로그인 성공", HttpStatus.OK);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Message signupExceptionHandler(Exception e) {
+        return new Message(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
