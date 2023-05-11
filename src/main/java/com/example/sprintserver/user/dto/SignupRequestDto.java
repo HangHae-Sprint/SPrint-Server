@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class SignupRequestDto {
 
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z]).{2,15}$",
+    @Pattern(regexp = "^(?=.*[a-z]).{2,15}$",
             message = "아이디는 2-15자 알파벳 소문자, 숫자로 입력해주세요.")
     private String username;
 

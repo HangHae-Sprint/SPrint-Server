@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,9 +40,12 @@ public class SprintController {
     @PostMapping // sprint 등록
     public SuccessResponseEntity<SprintDetailResponseDto> postSprint(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody PostSprintRequestDto requestDto
+            @Valid @RequestBody PostSprintRequestDto requestDto
     ){
         User user = userDetails.getUser();
+        if(requestDto.getFieldInfoList().isEmpty() || requestDto.getFieldInfoList() == null){
+            throw new IllegalArgumentException("적어도 하나의 모집 포지션을 선택해야 합니다.");
+        }
         return sprintService.postSprint(user, requestDto);
     }
 
