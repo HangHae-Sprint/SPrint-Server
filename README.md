@@ -46,7 +46,7 @@
 - 협업 notion : [notion](https://climbing-marjoram-ab8.notion.site/SPRINT-S-A-715632e4b492445bb91d3941a992d744)
 - FE Repo : [https://github.com/HangHae-Sprint/sprint-client.git](https://github.com/HangHae-Sprint/sprint-client.git)
 - BE Repo : [https://github.com/HangHae-Sprint/SPrint-Server.git](https://github.com/HangHae-Sprint/SPrint-Server.git)
-- 시연 영상 : url
+- 시연 영상 : [url](https://youtu.be/68kdRp359K4)
 
 <br>
 
