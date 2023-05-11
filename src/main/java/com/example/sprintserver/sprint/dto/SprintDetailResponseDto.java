@@ -53,7 +53,7 @@ public class SprintDetailResponseDto {
                 sprint.getId(),
                 sprint.getTitle(),
                 sprint.getContent(),
-                user.getNickname(),
+                sprint.getUser().getNickname(),
                 sprint.getNumLikes(),
                 sprint.getCreatedAt(),
                 sprint.getModifiedAt(),

@@ -140,15 +140,16 @@ public class SprintService {
         SprintFieldEntry field =
                 fieldEntryRepository.findBySprintIdAndFieldName(sprintId, requestDto.getPosition())
                         .orElseThrow(() -> new FieldNotFoundException("포지션 정보를 찾을 수 없습니다."));
+
         if(joinEntryRepository.existsByUserIdAndSprintId(user.getId(), sprintId)){
             throw new AlreadyExistsException("이미 지원한 스프린트입니다");
         }
+        System.out.println("체크포인트1");
         if(field.getFieldMax() <= field.getFieldMemberCount()){
             throw new FieldAlreadyFullException("해당 포지션은 모집이 마감되었습니다");
         }
         SprintJoinEntry new_join = new SprintJoinEntry
                 (user.getId(), sprintId, field.getFieldIdx(), requestDto.getGithubLink());
-
         joinEntryRepository.save(new_join);
         field.addFieldMember();
 

@@ -41,7 +41,7 @@ public class SprintListResponseDto {
         this(
                 sprint.getId(),
                 sprint.getTitle(),
-                user.getNickname(),
+                sprint.getUser().getNickname(),
                 sprint.getNumLikes(),
                 sprint.getCreatedAt(),
                 sprint.getModifiedAt(),
