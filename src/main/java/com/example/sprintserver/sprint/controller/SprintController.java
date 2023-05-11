@@ -1,10 +1,10 @@
 package com.example.sprintserver.sprint.controller;
 
+import com.example.sprintserver.common.ResponseEntity.SuccessResponseEntity;
 import com.example.sprintserver.common.security.UserDetailsImpl;
 import com.example.sprintserver.sprint.dto.*;
 import com.example.sprintserver.sprint.service.SprintService;
 import com.example.sprintserver.sprint.sprint_utils.SprintMessage;
-import com.example.sprintserver.common.ResponseEntity.SuccessResponseEntity;
 import com.example.sprintserver.user.entity.User;
 import com.example.sprintserver.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class SprintController {
     ){
         User user;
         if(userDetails == null){
-            user = userRepository.findByUsername("ananymous").orElseThrow(() -> new IllegalArgumentException("ananymous없음"));
+            user = userRepository.findByUsername("anonymous").orElseThrow(() -> new IllegalArgumentException("anonymous not found"));
         }
         else{
             user = userDetails.getUser();

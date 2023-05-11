@@ -18,8 +18,6 @@ public class LikeController {
 
     @PostMapping("/sprint/{sprintId}")
     public Message postLike(@PathVariable Long sprintId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        System.out.println("sprintId = " + sprintId);
-        System.out.println("userDetails.getUser().getUsername() = " + userDetails.getUser().getUsername());
         return likeService.sprintLike(sprintId, userDetails.getUser());
     }
 }

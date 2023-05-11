@@ -1,7 +1,6 @@
 package com.example.sprintserver.sprint.dto;
 
 import com.example.sprintserver.comment.dto.CommentResponseDto;
-import com.example.sprintserver.comment.entity.Comment;
 import com.example.sprintserver.sprint.entity.Sprint;
 import com.example.sprintserver.user.entity.User;
 import lombok.Builder;

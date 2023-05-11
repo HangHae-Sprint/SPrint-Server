@@ -1,7 +1,5 @@
 package com.example.sprintserver.sprint.entity;
 
-
-
 import com.example.sprintserver.common.Timestamped;
 import com.example.sprintserver.sprint.enums.SprintTypeEnum;
 import com.example.sprintserver.user.entity.User;
@@ -49,7 +47,6 @@ public class Sprint extends Timestamped {
     public void setTitle(String new_title){ this.title = new_title; }
     public void setContent(String new_content) { this.content = new_content; }
     public void setDeleted(Boolean isDeleted){ this.isDeleted = isDeleted; }
-    public void setSprintType(SprintTypeEnum new_type) { this.sprintType = new_type; }
 
     public void updateLike(boolean plusMinus) { this.numLikes = plusMinus? this.numLikes+1 : this.numLikes-1; }
 }
