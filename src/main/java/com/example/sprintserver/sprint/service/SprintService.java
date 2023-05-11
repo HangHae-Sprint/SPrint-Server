@@ -106,7 +106,7 @@ public class SprintService {
     public SuccessResponseEntity<SprintDetailResponseDto> getOneSprint(
             User user, Long sprintId
     ) {
-        Sprint sprint = loadSprintById(sprintId);    //나중에 쿼리좀 다듬어서 리팩토링
+        Sprint sprint = loadSprintById(sprintId);    //리팩토링 필요
         List<SprintFieldEntry> entries = fieldEntryRepository.findAllBySprintId(sprintId);
         List<FieldObject> fieldObjectList = makeFieldObjectList(entries);
         List<CommentResponseDto> comments = commentService.getCommentsOnSprint(sprintId, user);
@@ -140,15 +140,16 @@ public class SprintService {
         SprintFieldEntry field =
                 fieldEntryRepository.findBySprintIdAndFieldName(sprintId, requestDto.getPosition())
                         .orElseThrow(() -> new FieldNotFoundException("포지션 정보를 찾을 수 없습니다."));
+
         if(joinEntryRepository.existsByUserIdAndSprintId(user.getId(), sprintId)){
             throw new AlreadyExistsException("이미 지원한 스프린트입니다");
         }
+        System.out.println("체크포인트1");
         if(field.getFieldMax() <= field.getFieldMemberCount()){
             throw new FieldAlreadyFullException("해당 포지션은 모집이 마감되었습니다");
         }
         SprintJoinEntry new_join = new SprintJoinEntry
                 (user.getId(), sprintId, field.getFieldIdx(), requestDto.getGithubLink());
-
         joinEntryRepository.save(new_join);
         field.addFieldMember();
 
@@ -206,10 +207,10 @@ public class SprintService {
     }
 
     private Map<Long, List<SprintFieldEntry>> getAndMapFieldEntryToSprintId(List<Sprint> sprintList) {
-        return fieldEntryRepository.findAllBySprintIn(sprintList)
-                .stream()
-                .filter(e -> e.getFieldIdx() != null)
-                .collect(Collectors.groupingBy(s -> s.getSprint().getId()));
+            return fieldEntryRepository.findAllBySprintIn(sprintList)
+                    .stream()
+                    .filter(e -> e.getFieldIdx() != null)
+                    .collect(Collectors.groupingBy(s -> s.getSprint().getId()));
     }
 
     private List<SprintListResponseDto> mapToListResponse(User user, List<Sprint> sprintList, List<Long> userLikedSprintId, Map<Long, List<SprintFieldEntry>> sprintEntryMap) {

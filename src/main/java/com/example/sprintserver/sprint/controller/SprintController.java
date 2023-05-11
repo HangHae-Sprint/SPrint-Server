@@ -26,7 +26,7 @@ public class SprintController {
     ){
         User user;
         if(userDetails == null){
-            user = userRepository.findById(38L).orElseThrow(() -> new IllegalArgumentException("ananymous없음"));
+            user = userRepository.findByUsername("ananymous").orElseThrow(() -> new IllegalArgumentException("ananymous없음"));
         }
         else{
             user = userDetails.getUser();
