@@ -1,6 +1,6 @@
 ### Mini project
 
-<h3 align="center"><b>SPRINT</b></h3>
+<h3 align="center"><b>SPrint</b></h3>
 
 <h4 align="center">📆 2023.05.04 ~ 2023.05.11</h4>
 <br>
